@@ -2,6 +2,7 @@ import tkinter as tk
 import tkinter.messagebox as messagebox
 import os
 import shutil
+import sys
 
 class Downloader:
     def __init__(self, download_directory, installation_directory):
@@ -35,6 +36,7 @@ class Downloader:
             os.system(f"mv {self.download_directory}/Janex-Assistant-{self.version}/* {self.installation_directory}")
 
             messagebox.showinfo("Installation Complete", "Janex Personal Assistant has been installed successfully!")
+            sys.exit()
         except Exception as e:
             messagebox.showerror("Installation Failed", f"An error occurred during installation: {str(e)}")
 
