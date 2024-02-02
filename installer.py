@@ -8,6 +8,9 @@ class Downloader:
         self.download_directory = download_directory
         self.installation_directory = installation_directory
         self.version = "0.0.3"
+    
+    def install_dependencies(self):
+        os.system("cd ~/.JanexAssistant && python3 -m pip install -r Setup/requirements.txt")
 
     def download_and_extract(self):
         try:
@@ -69,6 +72,7 @@ class App:
         directory = self.directory_entry.get()
         downloader = Downloader("~/Downloads", directory)
         downloader.download_and_extract()
+        downloader.install_dependencies()
 
 if __name__ == "__main__":
     root = tk.Tk()
