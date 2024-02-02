@@ -7,6 +7,7 @@ class Downloader:
     def __init__(self, download_directory, installation_directory):
         self.download_directory = download_directory
         self.installation_directory = installation_directory
+        self.version = "0.0.3"
 
     def download_and_extract(self):
         try:
@@ -21,14 +22,14 @@ class Downloader:
                             os.remove(item_path)
 
             print("Downloading zip.")
-            os.system(f"cd {self.download_directory} && wget https://github.com/ChronoByte404/Janex-Assistant/archive/refs/tags/v0.0.3.zip -O Janex-Assistant.zip")
+            os.system(f"cd {self.download_directory} && wget https://github.com/ChronoByte404/Janex-Assistant/archive/refs/tags/v{self.version}.zip -O Janex-Assistant.zip")
 
             print("Extracting zip.")
             os.system(f"unzip {self.download_directory}/Janex-Assistant.zip -d {self.download_directory}")
 
             print("Moving contents.")
             os.system(f"mkdir -p {self.installation_directory}")
-            os.system(f"mv {self.download_directory}/Janex-Assistant-0.0.3/* {self.installation_directory}")
+            os.system(f"mv {self.download_directory}/Janex-Assistant-{self.version}/* {self.installation_directory}")
 
             messagebox.showinfo("Installation Complete", "Janex Personal Assistant has been installed successfully!")
         except Exception as e:
