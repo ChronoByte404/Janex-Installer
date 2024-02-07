@@ -3,15 +3,33 @@ import tkinter.messagebox as messagebox
 import os
 import shutil
 import sys
+import subprocess
 
 class Downloader:
     def __init__(self, download_directory, installation_directory):
         self.download_directory = download_directory
         self.installation_directory = installation_directory
-        self.version = "0.0.3"
-    
+        self.version = "0.0.6"
+
     def install_dependencies(self):
-        os.system("cd ~/.JanexAssistant && python3 -m pip install -r Setup/requirements.txt")
+        os.system("cd ~/.JanexAssistant && mkdir ./Settings && python3 -m pip install -r Setup/requirements.txt")
+
+    def create_desktop_entry(self):
+        os.system("cd ~ && wget https://github.com/ChronoByte404/Janex-Assistant/raw/main/BinaryFiles/Janex-Assistant.janex")
+        subprocess.run(f"sudo chmod +x {os.environ['HOME']}/Janex-Assistant.janex", shell=True, check=True)
+        desktop_entry = f'''[Desktop Entry]
+Name=Janex Assistant
+Exec="~/Janex-Assistant.janex"
+Icon={os.path.join(self.installation_directory, 'images', 'icon.png')}
+Type=Application
+Categories=Utility;'''
+
+        desktop_path = os.path.join(os.environ['HOME'], '.local', 'share', 'applications', 'Janex_Assistant.desktop')
+
+        with open(desktop_path, 'w') as desktop_file:
+            desktop_file.write(desktop_entry)
+
+        print(f"Desktop entry created at: {desktop_path}")
 
     def download_and_extract(self):
         try:
@@ -35,7 +53,12 @@ class Downloader:
             os.system(f"mkdir -p {self.installation_directory}")
             os.system(f"mv {self.download_directory}/Janex-Assistant-{self.version}/* {self.installation_directory}")
 
+            print("Creating executable.")
+
+            JanexAssistantInfo = ""
+
             messagebox.showinfo("Installation Complete", "Janex Personal Assistant has been installed successfully!")
+            self.create_desktop_entry()  # Call to create desktop entry
             sys.exit()
         except Exception as e:
             messagebox.showerror("Installation Failed", f"An error occurred during installation: {str(e)}")
