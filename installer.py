@@ -71,7 +71,7 @@ class App:
 
     def setup_window(self):
         self.root.title("Janex Personal Assistant - Installer")
-        width, height = 324, 168
+        width, height = 324, 228
         screenwidth = self.root.winfo_screenwidth()
         screenheight = self.root.winfo_screenheight()
         alignstr = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2, (screenheight - height) / 2)
@@ -85,9 +85,14 @@ class App:
         self.directory_entry.insert(tk.END, default_directory)
         self.directory_entry.place(x=30, y=90, width=260, height=30)
 
+        # Entry widget for assistant name
+        self.assistant_name_entry = tk.Entry(self.root, bg="#ffffff", fg="#333333", justify="center")
+        self.assistant_name_entry.insert(tk.END, "Janex Assistant")
+        self.assistant_name_entry.place(x=30, y=140, width=260, height=30)
+
         # Install button
         install_button = tk.Button(self.root, text="Install", command=self.install_action, bg="#01aaed", fg="#000000", justify="center")
-        install_button.place(x=220, y=130, width=71, height=30)
+        install_button.place(x=220, y=190, width=71, height=30)
 
         # Label
         label = tk.Label(self.root, text="Install your own Janex Personal Assistant", fg="#333333", justify="center")
